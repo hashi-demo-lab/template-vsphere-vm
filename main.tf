@@ -1,8 +1,13 @@
+data "vault_ldap_static_credentials" "vm_builder" {
+  mount     = "ldap"
+  role_name = "vm_builder"
+}
+
 module "vm" {
   source  = "app.terraform.io/cloudbrokeraz/virtual-machine/vsphere"
-  version = "~> 1.4"
+  version = "0.0.1"
 
-  template          = data.hcp_packer_artifact.this.external_identifier
+  template          = var.vsphere_template_name
   datacenter        = var.site
   cluster           = var.environment
   resource_pool     = var.tier
@@ -16,7 +21,7 @@ module "vm" {
   workgroup         = var.workgroup
 
   networks = {
-    "seg-general" = "${nsxt_policy_ip_address_allocation.this.allocation_ip}/22"
+    "seg-general" = "dhcp"
   }
   gateway         = var.gateway
   dns_server_list = var.dns_server_list
