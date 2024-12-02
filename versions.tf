@@ -12,6 +12,8 @@ terraform {
 }
 
 provider "vsphere" {
+  user     = "${data.vault_ldap_static_credentials.vm_builder.username}@hashicorp.local"
+  password = data.vault_ldap_static_credentials.vm_builder.password
 }
 
 provider "nsxt" {
