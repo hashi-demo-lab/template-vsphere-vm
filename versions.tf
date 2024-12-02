@@ -1,14 +1,20 @@
-## Place your Terraform Args / Provider version args here
-/* terraform {
-  required_version = ">=1.3.0"
+terraform {
   required_providers {
-    vault = {
-      source  = "hashicorp/vault"
-      version = "~> 3.11.0"
+    vsphere = {
+      source  = "hashicorp/vsphere"
+      version = "2.5.1"
     }
-    random = {
-      source  = "hashicorp/random"
-      version = "~>3.4.3"
+    nsxt = {
+      source  = "vmware/nsxt"
+      version = "3.4.0"
     }
   }
-} */
+}
+
+provider "vsphere" {
+}
+
+provider "nsxt" {
+  allow_unverified_ssl = true
+  max_retries          = 2
+}
